@@ -4,5 +4,4 @@ using "Shunting-yard" algoritme of [Edsger Dijkstra](https://en.wikipedia.org/wi
 
 ### Todo list
 * add more operators
-* handle parenthesis
-* improve program structure.
+* ~~handle parentheses~~
