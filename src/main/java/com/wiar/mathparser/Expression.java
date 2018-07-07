@@ -1,36 +1,41 @@
 package main.java.com.wiar.mathparser;
 
-import java.util.List;
-
 import main.java.com.wiar.mathparser.operators.Operator;
 import main.java.com.wiar.utils.Utils;
 
+import java.util.List;
+
 public class Expression {
-	
-	private List<Double> numberStack;
-	private List<Operator> operatorStack;
-	
-	private String expression;
-	
-	public Expression(String e) {
-		this.expression = Utils.formatExpression(e);
-		this.numberStack = Utils.getNumbers(e);
-		this.operatorStack = Utils.getOperators(e);
-	}
-	
-	public List<Double> getNumberStack() {
-		return numberStack;
-	}
 
-	public List<Operator> getOperatorStack() {
-		return operatorStack;
-	}
+    @Deprecated
+    private List<Double> numberList;
+    @Deprecated
+    private List<Operator> operatorList;
 
-	public String getExpression() {
-		return expression;
-	}
-	
-	public String toString() {
-		return expression + " = y";
-	}
+    private List<Object> expression;
+
+    public Expression(String e) {
+        this.expression = Utils.parseExpression(e);
+        this.numberList = Utils.getNumbers(e);
+        this.operatorList = Utils.getOperators(e);
+    }
+
+
+    @Deprecated
+    public List<Double> getNumberList() {
+        return numberList;
+    }
+
+    @Deprecated
+    public List<Operator> getOperatorList() {
+        return operatorList;
+    }
+
+    public List<Object> getExpression() {
+        return expression;
+    }
+
+    public String toString() {
+        return Utils.ListToString(expression);
+    }
 }
