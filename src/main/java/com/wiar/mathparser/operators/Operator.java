@@ -1,7 +1,5 @@
 package main.java.com.wiar.mathparser.operators;
 
-import main.java.com.wiar.utils.OperatorAssociativity;
-
 public abstract class Operator {
 
     private OperatorAssociativity associativity;

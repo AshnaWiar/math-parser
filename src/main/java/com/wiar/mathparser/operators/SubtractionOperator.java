@@ -1,8 +1,5 @@
 package main.java.com.wiar.mathparser.operators;
 
-import main.java.com.wiar.utils.OperatorAssociativity;
-import main.java.com.wiar.utils.Precedence;
-
 public class SubtractionOperator extends Operator {
 
 
