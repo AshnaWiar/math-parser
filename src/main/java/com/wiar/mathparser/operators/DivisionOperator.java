@@ -1,14 +1,17 @@
 package main.java.com.wiar.mathparser.operators;
 
-public class DivisionOperator extends Operator {
+public final class DivisionOperator extends Operator {
 
-
-    public DivisionOperator(int precedence, OperatorAssociativity associativity) {
-        super(precedence, associativity);
-    }
+    private static DivisionOperator instance;
 
     public DivisionOperator() {
-        this(Precedence.DIVISION, OperatorAssociativity.LEFT);
+        super(Precedence.DIVISION, OperatorAssociativity.LEFT);
+    }
+
+    public static Operator getInstance(){
+        if(instance == null)
+            instance = new DivisionOperator();
+        return instance;
     }
 
     @Override

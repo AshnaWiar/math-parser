@@ -1,14 +1,17 @@
 package main.java.com.wiar.mathparser.operators;
 
-public class SubtractionOperator extends Operator {
+public final class SubtractionOperator extends Operator {
 
-
-    public SubtractionOperator(int precedence, OperatorAssociativity associativity) {
-        super(precedence, associativity);
-    }
+    private static SubtractionOperator instance;
 
     public SubtractionOperator() {
-        this(Precedence.SUBTRACTION, OperatorAssociativity.LEFT);
+        super(Precedence.SUBTRACTION, OperatorAssociativity.LEFT);
+    }
+
+    public static Operator getInstance(){
+        if(instance == null)
+            instance = new SubtractionOperator();
+        return instance;
     }
 
     @Override

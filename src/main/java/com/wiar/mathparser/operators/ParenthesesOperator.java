@@ -1,6 +1,6 @@
 package main.java.com.wiar.mathparser.operators;
 
-public class ParenthesesOperator extends Operator {
+public abstract class ParenthesesOperator extends Operator {
 
     private final boolean open;
 

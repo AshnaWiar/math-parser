@@ -1,13 +1,17 @@
 package main.java.com.wiar.mathparser.operators;
 
-public class MultiplicationOperator extends Operator {
+public final class MultiplicationOperator extends Operator {
 
-    public MultiplicationOperator(int precedence, OperatorAssociativity associativity) {
-        super(precedence, associativity);
-    }
+    private static MultiplicationOperator instance;
 
     public MultiplicationOperator() {
-        this(Precedence.MULTIPLICATION, OperatorAssociativity.LEFT);
+        super(Precedence.MULTIPLICATION, OperatorAssociativity.LEFT);
+    }
+
+    public static Operator getInstance(){
+        if(instance == null)
+            instance = new MultiplicationOperator();
+        return instance;
     }
 
     @Override
