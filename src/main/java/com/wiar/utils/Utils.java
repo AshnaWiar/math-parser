@@ -60,13 +60,6 @@ public final class Utils {
         return op;
     }
 
-    public static String ListToString(List l) {
-        return l.toString().
-                replace("[", "").
-                replace("]", "").
-                replace(",", "");
-    }
-
     // Messy!
     public static List<Object> parseExpression(String e) {
         List<Object> expression = new ArrayList<>();
