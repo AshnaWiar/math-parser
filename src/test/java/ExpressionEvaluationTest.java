@@ -11,7 +11,6 @@ public class ExpressionEvaluationTest {
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        //96+85/96*85+96*85/85-85*96/85*96+63 bug, wrong answer
         System.out.print("Type your expression: ");
         testExpression(s.nextLine());
     }
