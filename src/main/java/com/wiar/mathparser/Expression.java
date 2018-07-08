@@ -1,6 +1,7 @@
 package main.java.com.wiar.mathparser;
 
 import main.java.com.wiar.mathparser.operators.Operator;
+import main.java.com.wiar.utils.StringUtils;
 import main.java.com.wiar.utils.Utils;
 
 import java.util.List;
@@ -36,6 +37,6 @@ public class Expression {
     }
 
     public String toString() {
-        return Utils.ListToString(expression);
+        return StringUtils.formatListSimple(expression);
     }
 }
