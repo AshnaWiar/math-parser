@@ -3,16 +3,14 @@ package main.java.com.wiar.mathparser.algorithm;
 import main.java.com.wiar.mathparser.Expression;
 import main.java.com.wiar.mathparser.algorithm.impl.IAlgorithm;
 import main.java.com.wiar.mathparser.operators.Operator;
+import main.java.com.wiar.mathparser.operators.OperatorAssociativity;
 import main.java.com.wiar.mathparser.operators.ParenthesesOperator;
 import main.java.com.wiar.utils.StringUtils;
-import main.java.com.wiar.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.List;
 
 public class ShuntingYardAlgorithm implements IAlgorithm {
-
 
     private List<Object> generateReversePolishNotation(Expression expression) {
         List<Object> tokens = expression.getExpression();
@@ -22,24 +20,35 @@ public class ShuntingYardAlgorithm implements IAlgorithm {
 
             if (isOperator(token)) {
                 Operator operator = (Operator) token;
-                while (operatorStack.size() != 0 && operatorStack.get(0).getPrecedence() > operator.getPrecedence())
+                /*
+                while ((there is a function at the top of the operator stack)
+                   or (there is an operator at the top of the operator stack with greater precedence)
+                   or (the operator at the top of the operator stack has equal precedence and is left associative))
+                   and (the operator at the top of the operator stack is not a left bracket):
+                 */
+                while (operatorStack.size() != 0 &&
+                        !isParentheses(operator) &&
+                        operatorStack.get(0).getPrecedence() >= operator.getPrecedence() &&
+                        operatorStack.get(0).getAssociativity() == OperatorAssociativity.LEFT
+                        )
+                {
                     pop(operatorStack, output);
+                }
                 operatorStack.add(0, operator);
 
 
                 if (operator instanceof ParenthesesOperator) {
                     ParenthesesOperator parentheses = (ParenthesesOperator) operator;
-                    ParenthesesOperator openParentheses = new ParenthesesOperator(true);
 
                     if (!parentheses.isOpen()) {
                         operatorStack.remove(0);
 
-                        while (!operatorStack.get(0).equals(openParentheses)) {
+                        while (!operatorStack.get(0).equals("(")) {
                             pop(operatorStack, output);
                         }
 
                         if (operatorStack.get(0) instanceof ParenthesesOperator
-                                && operatorStack.get(0).equals(openParentheses)) {
+                                && operatorStack.get(0).equals("(")) {
                             operatorStack.remove(0);
                         }
                     }
@@ -49,9 +58,7 @@ public class ShuntingYardAlgorithm implements IAlgorithm {
             output.add(token);
 
         }
-        for (Operator operator : operatorStack) {
-            output.add(operator);
-        }
+        output.addAll(operatorStack);
         return output;
     }
 
@@ -63,7 +70,6 @@ public class ShuntingYardAlgorithm implements IAlgorithm {
     private void pop(Operator operator, List<Object> stack) {
         pop(operator, stack, stack.size() - 1);
     }
-
 
     private void pop(Operator operator, List<Object> stack, int index) {
         // check 1
@@ -92,21 +98,23 @@ public class ShuntingYardAlgorithm implements IAlgorithm {
         return (object instanceof Operator);
     }
 
+    private boolean isParentheses(Object object) {
+        return (object instanceof ParenthesesOperator);
+    }
+
     @Override
     public double evaluate(Expression expression) {
         List<Object> postfix = generateReversePolishNotation(expression);
-        System.out.println("Debug RPN: " + Utils.ListToString(postfix));
+        System.out.println("Debug RPN: " + StringUtils.formatListSimple(postfix));
         return popAll(postfix);
     }
 
     private double popAll(List<Object> postfix) {
         if (postfix.size() == 0)
-            throw new EmptyStackException();
+            throw new IllegalArgumentException("Invalid argument, got array of size 0");
 
         List<Object> output = new ArrayList<>();
-        for (int index = 0; index < postfix.size(); index++) {
-            Object indexVal = postfix.get(index);
-
+        for (Object indexVal : postfix) {
             if (indexVal instanceof Number) {
                 output.add(indexVal);
                 continue;
