@@ -13,17 +13,17 @@ public abstract class Operator {
     public static Operator get(String s) {
         switch (s) {
             case "+":
-                return new AdditionOperator();
+                return AdditionOperator.getInstance();
             case "-":
-                return new SubtractionOperator();
+                return SubtractionOperator.getInstance();
             case "/":
-                return new DivisionOperator();
+                return DivisionOperator.getInstance();
             case "*":
-                return new MultiplicationOperator();
+                return MultiplicationOperator.getInstance();
             case "(":
-                return new ParenthesesOperator(true);
+                return OpenParenthesesOperator.getInstance();
             case ")":
-                return new ParenthesesOperator(false);
+                return CloseParenthesesOperator.getInstance();
             default:
                 throw new IllegalArgumentException("invalid Argument [" + s + "] is not an operator.");
         }
@@ -53,11 +53,14 @@ public abstract class Operator {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Operator))
-            return false;
-        Operator target = (Operator) obj;
-
-        return getSymbol() == target.getSymbol();
+        if (obj instanceof Operator) {
+            Operator target = (Operator) obj;
+            return getSymbol() == target.getSymbol();
+        }else if(obj instanceof String){
+            String symbol = (String) obj;
+            return symbol.equals(String.valueOf(getSymbol()));
+        }
+        return false;
     }
 
     public abstract double evaluate(double i1, double i2);
