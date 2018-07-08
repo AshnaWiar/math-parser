@@ -11,14 +11,14 @@ public class OperatorsTest {
     public static void main(String[] arg) {
 
         Operator addition = new AdditionOperator();
-        Operator substraction = new SubtractionOperator();
+        Operator subtraction = new SubtractionOperator();
         Operator multiplication = new MultiplicationOperator();
         Operator division = new DivisionOperator();
 
         double result = addition.evaluate(5, 9);
         logger.info("result: 5 + 9 -> " + result);
 
-        result = substraction.evaluate(result, 2);
+        result = subtraction.evaluate(result, 2);
         logger.info("result: (5 + 9) - 2 -> " + result);
 
         result = multiplication.evaluate(result, 3);
